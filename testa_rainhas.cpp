@@ -63,4 +63,9 @@ TEST_CASE("Casos adicionais para o problema", "[rainhas]") {
         REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_34.txt") == 1);
         REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_35.txt") == 1);
     }
+
+    SECTION("Matrizes com números incorretos de colunas ou linhas") {
+        REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_36.txt") == -1);
+        REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_37.txt") == -1);
+    }
 }
