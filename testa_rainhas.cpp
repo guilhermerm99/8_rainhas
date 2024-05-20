@@ -68,4 +68,9 @@ TEST_CASE("Casos adicionais para o problema", "[rainhas]") {
         REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_36.txt") == -1);
         REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_37.txt") == -1);
     }
+
+    SECTION("Tabuleiros vazios") {
+        REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_38.txt") == -1);
+    }
+    
 }
