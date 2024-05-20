@@ -1,3 +1,11 @@
+/*
+Copyright 2024 Guilherme Ribeiro de Macedo
+
+Este arquivo faz parte do projeto de resolução do problema das 8 rainhas.
+
+Autor: Guilherme Ribeiro de Macedo
+Contato: guilhermerm99@gmail.com
+*/
 #include <iostream>
 #include <fstream>
 #include <string>
