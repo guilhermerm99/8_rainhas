@@ -1,3 +1,11 @@
+/*
+Copyright 2024 Guilherme Ribeiro de Macedo
+
+Este arquivo faz parte do projeto de resolução do problema das 8 rainhas.
+
+Autor: Guilherme Ribeiro de Macedo
+Contato: guilhermerm99@gmail.com
+*/
 #define CATCH_CONFIG_MAIN
 #include "rainhas.hpp"
 #include "catch.hpp"
