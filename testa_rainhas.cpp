@@ -4,7 +4,7 @@
 
 TEST_CASE("Soluções inválidas para o problema", "[rainhas]") {
     SECTION("Soluções inválidas com 8 rainhas") {
-        REQUIRE(verifica_solucao_8_rainhas("teste_8_rainhas.txt") == 0);
+        REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_8_rainhas.txt") == 0);
         REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_13.txt") == 0);
         REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_14.txt") == 0);
         REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_15.txt") == 0);
