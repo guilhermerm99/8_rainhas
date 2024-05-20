@@ -52,3 +52,10 @@ TEST_CASE("Matrizes inválidas para o problema", "[rainhas]") {
     REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_23.txt") == -1);
     REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_24.txt") == -1);
 }
+
+TEST_CASE("Casos adicionais para o problema", "[rainhas]") {
+    SECTION("Soluções válidas com mais de 8 rainhas") {
+        REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_32.txt") == 1);
+        REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_33.txt") == 1);
+    }
+}
