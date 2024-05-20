@@ -72,5 +72,9 @@ TEST_CASE("Casos adicionais para o problema", "[rainhas]") {
     SECTION("Tabuleiros vazios") {
         REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_38.txt") == -1);
     }
-    
+
+    SECTION("Tabuleiros com caracteres inválidos") {
+        REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_39.txt") == -1);
+        REQUIRE(verifica_solucao_8_rainhas("tabuleiros/teste_40.txt") == -1);
+    }
 }
