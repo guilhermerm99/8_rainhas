@@ -1,0 +1,263 @@
+        -:    0:Source:rainhas.cpp
+        -:    0:Graph:rainhas.gcno
+        -:    0:Data:rainhas.gcda
+        -:    0:Runs:1
+        -:    1:/*
+        -:    2:Copyright 2024 Guilherme Ribeiro de Macedo
+        -:    3:
+        -:    4:Este arquivo faz parte do projeto de resolução do problema das 8 rainhas.
+        -:    5:
+        -:    6:Autor: Guilherme Ribeiro de Macedo
+        -:    7:Contato: guilhermerm99@gmail.com
+        -:    8:*/
+        -:    9:#include <iostream>
+        -:   10:#include <fstream>
+        -:   11:#include <string>
+        -:   12:#include <vector>
+        -:   13:#include <cstdio>
+        -:   14:#include <algorithm>
+        -:   15:#include "rainhas.hpp"
+        -:   16:
+        -:   17:using std::cout; using std::cin;
+        -:   18:using std::endl; using std::string;
+        -:   19:using std::vector;
+        -:   20:
+       77:   21:int verificaTamanho(const std::string& filename) {
+       77:   22:    std::ifstream arquivo(filename);
+        -:   23:
+       77:   24:    if (!arquivo) {
+    #####:   25:        std::cout << "Erro ao abrir o arquivo." << filename << std::endl;
+    #####:   26:        return -2;
+        -:   27:    }
+        -:   28:
+       77:   29:    int contLetras = 0;
+       77:   30:    int contNumeros = 0;
+        -:   31:    char caractere;
+        -:   32:
+     6133:   33:    while (arquivo.get(caractere)) {
+     6056:   34:        if (isalpha(caractere)) {
+       49:   35:            contLetras++;
+     6007:   36:        } else if (isdigit(caractere)) {
+     4367:   37:            contNumeros++;
+        -:   38:        }
+        -:   39:    }
+        -:   40:
+       77:   41:    if (contNumeros != 64 && contLetras != 0) {
+        5:   42:        return -1;
+        -:   43:    }
+        -:   44:
+       72:   45:    arquivo.close();
+        -:   46:
+       72:   47:    return 1;
+       77:   48:}
+        -:   49:
+       41:   50:int check(const std::string& filename) {
+       41:   51:    if (verificaTamanho(filename) == -1) { return -1;}
+      36*:   52:    if (verificaTamanho(filename) == -2) { return -2;}
+        -:   53:
+       36:   54:    std::ifstream arquivo(filename);
+        -:   55:
+       36:   56:    std::string linha1, linha2, linha3, linha4, linha5, linha6, linha7, linha8;
+       36:   57:    std::string linhaExtra;
+        -:   58:
+       36:   59:    if (std::getline(arquivo, linha1) &&
+       71:   60:        std::getline(arquivo, linha2) &&
+       35:   61:        std::getline(arquivo, linha3) &&
+       35:   62:        std::getline(arquivo, linha4) &&
+       35:   63:        std::getline(arquivo, linha5) &&
+       33:   64:        std::getline(arquivo, linha6) &&
+       30:   65:        std::getline(arquivo, linha7) &&
+      100:   66:        std::getline(arquivo, linha8) &&
+       29:   67:        !std::getline(arquivo, linhaExtra)) {
+        -:   68:    } else {
+       10:   69:        return -1;
+        -:   70:    }
+        -:   71:
+       26:   72:    arquivo.close();
+        -:   73:
+       26:   74:    int valueReturn = 1;
+        -:   75:    int arrayLine1[8];  //  Array para armazenar os 8 primeiros números
+        -:   76:    int arrayLine2[8];
+        -:   77:    int arrayLine3[8];
+        -:   78:    int arrayLine4[8];
+        -:   79:    int arrayLine5[8];
+        -:   80:    int arrayLine6[8];
+        -:   81:    int arrayLine7[8];
+        -:   82:    int arrayLine8[8];
+        -:   83:
+        -:   84:    // Extrai os 8 primeiros caracteres da string e os converte para inteiros
+       26:   85:    int countLine = 0;
+       26:   86:    int countTotal = 0;
+        -:   87:    int* arrays[] = {
+        -:   88:       arrayLine1, arrayLine2, arrayLine3, arrayLine4,
+       26:   89:       arrayLine5, arrayLine6, arrayLine7, arrayLine8};
+        -:   90:
+        -:   91:    vector<string> linhas =
+      260:   92:      { linha1, linha2, linha3, linha4, linha5, linha6, linha7, linha8};
+        -:   93:
+       26:   94:    int attackSameLine[8] = {10, 10, 10, 10, 10, 10, 10, 10};
+        -:   95:
+       26:   96:    std::string ataques = "";  //  Armazena ataques
+        -:   97:
+      229:   98:    for (int i = 0; i < 8; i++) {
+        -:   99:        //  colocando lista em array de inteiros
+      205:  100:        countLine = 0;
+     1845:  101:        for (int y = 0; y < 8; y++) {attackSameLine[y] = 10;}
+        -:  102:
+     1841:  103:        for (int j = 0; j < 8; j++) {
+     1638:  104:            if (linhas[i][j] - '0' == 1 || linhas[i][j] - '0' == 0) {
+     1636:  105:                arrays[i][j] = linhas[i][j] - '0';
+     1636:  106:                if (arrays[i][j] == 1) {
+      188:  107:                    countLine += 1;
+      188:  108:                    countTotal += 1;
+        -:  109:                }
+        2:  110:            } else { return -1;}  //  caracter diferente de 1 e 0
+        -:  111:        }
+        -:  112:
+        -:  113:        //  verificação ataque mesma linha
+      203:  114:        if (countLine >=  2) {
+       63:  115:            for (int x = 0; x < 8; x++) {
+       56:  116:                if (arrays[i][x] == 1) {
+       54:  117:                    for (int a = 0; a < 8; a++) {
+       54:  118:                        if (attackSameLine[a] == 10) {
+       20:  119:                            attackSameLine[a] = x;
+       20:  120:                            break;
+        -:  121:                        }
+        -:  122:                    }
+        -:  123:                }
+        -:  124:            }
+       56:  125:            for (int b = 0; b < 7; b++) {
+       49:  126:                if (attackSameLine[b] != 10 && attackSameLine[b+1] != 10) {
+       13:  127:                    ataques += std::to_string(i + 1); ataques += ",";
+       13:  128:                    ataques += std::to_string(attackSameLine[b] + 1);
+       13:  129:                    ataques += "            ";
+       13:  130:                    ataques += std::to_string(i + 1); ataques += ",";
+       13:  131:                    ataques += std::to_string(attackSameLine[b+1] + 1);
+       13:  132:                    ataques += "\n";
+       13:  133:                    valueReturn = 0;
+        -:  134:                }
+        -:  135:            }
+        -:  136:        }
+        -:  137:    }
+        -:  138:
+       24:  139:    if (countTotal > 8 || countTotal < 8) {  //  mais ou menos de 8 rainhas
+        2:  140:        return -1;
+        -:  141:    }
+        -:  142:
+        -:  143:
+        -:  144:    //  verificacao colunas
+       22:  145:    bool shouldBreak = false;
+      198:  146:    for (int i = 0; i < 8; i++) {
+     1584:  147:        for (int j = 0; j < 8; j++) {
+     1408:  148:            if (arrays[i][j] == 1) {
+      176:  149:                shouldBreak =  false;
+      967:  150:                for (int y = i; y < 8; y++) {
+     4518:  151:                    for (int x = j; x < 8; x++) {
+     3727:  152:                        if (arrays[y][x] == 1 && i != y && x == j) {
+       16:  153:                            ataques += std::to_string(i + 1); ataques += ",";
+       16:  154:                            ataques += std::to_string(j + 1);
+       16:  155:                            ataques += "            ";
+       16:  156:                            ataques += std::to_string(y + 1); ataques += ",";
+       16:  157:                            ataques += std::to_string(x + 1); ataques += "\n";
+        -:  158:
+       16:  159:                            valueReturn = 0;
+       16:  160:                            shouldBreak = true;
+       16:  161:                            break;
+        -:  162:                        }
+        -:  163:                    }
+      807:  164:                    if (shouldBreak) {break;}
+        -:  165:                }
+        -:  166:            }
+        -:  167:        }
+        -:  168:    }
+        -:  169:
+        -:  170:    //  verificacao diagonais direita
+       22:  171:    int cont = 0;
+      198:  172:    for (int i = 0; i < 8; i++) {
+     1584:  173:        for (int j = 0; j < 8; j++) {
+     1408:  174:            if (arrays[i][j] == 1) {
+      176:  175:                cont = 1;
+      489:  176:                for (int y = i + 1; y < 8; y++) {
+      416:  177:                    if (j+cont >= 8) {
+       63:  178:                        break;
+        -:  179:                    }
+      353:  180:                    if (arrays[y][j+cont] == 1) {
+       40:  181:                        ataques += std::to_string(i + 1); ataques += ",";
+       40:  182:                        ataques += std::to_string(j + 1);
+       40:  183:                        ataques += "            ";
+       40:  184:                        ataques += std::to_string(y + 1); ataques += ",";
+       40:  185:                        ataques += std::to_string(j+cont + 1); ataques += "\n";
+       40:  186:                        valueReturn = 0;
+       40:  187:                        break;
+        -:  188:                    }
+      313:  189:                    cont += 1;
+        -:  190:                }
+        -:  191:            }
+        -:  192:        }
+        -:  193:    }
+        -:  194:
+        -:  195:    //  verificacao diagonais esquerda
+       22:  196:    cont = 0;
+      198:  197:    for (int i = 0; i < 8; i++) {
+     1584:  198:        for (int j = 0; j < 8; j++) {
+     1408:  199:            if (arrays[i][j] == 1) {
+      176:  200:                cont = 1;
+      504:  201:                for (int y = i + 1; y < 8; y++) {
+      425:  202:                    if (j-cont < 0) {
+       75:  203:                        break;
+        -:  204:                    }
+      350:  205:                    if (arrays[y][j-cont] == 1) {
+       22:  206:                        ataques += std::to_string(i + 1); ataques += ",";
+       22:  207:                        ataques += std::to_string(j + 1);
+       22:  208:                        ataques += "            ";
+       22:  209:                        ataques += std::to_string(y + 1); ataques += ",";
+       22:  210:                        ataques += std::to_string(j-cont + 1); ataques += "\n";
+       22:  211:                        valueReturn = 0;
+       22:  212:                        break;
+        -:  213:                    }
+      328:  214:                    cont += 1;
+        -:  215:                }
+        -:  216:            }
+        -:  217:        }
+        -:  218:    }
+       22:  219:    if (valueReturn == 0) {
+       16:  220:        std::string nome = "ataques/ataques - ";
+       16:  221:        nome += filename;
+       16:  222:        std::string word = "tabuleiros/";
+       16:  223:        size_t pos = nome.find(word);
+       16:  224:        if (pos != std::string::npos) {
+       16:  225:           nome.erase(pos, word.length());
+        -:  226:        }
+        -:  227:
+       16:  228:        std::ofstream file(nome);
+       16:  229:            if (file.is_open()) {
+       16:  230:                file << ataques;
+       16:  231:                file.close();
+        -:  232:            } else {
+    #####:  233:               std::cerr << "Erro ao criar o arquivo: " << nome << std::endl;
+        -:  234:            }
+       16:  235:    }
+       22:  236:    return valueReturn;
+       36:  237:}
+        -:  238:
+       41:  239:int verifica_solucao_8_rainhas(const std::string& filename) {
+       41:  240:    int valor = check(filename);
+        -:  241:
+       41:  242:    if (valor == -1) {
+       19:  243:        cout << "-1" << endl;
+       19:  244:        return -1;  //  matriz Inválida
+        -:  245:    }
+       22:  246:    if (valor == -2) {
+    #####:  247:        cout << "Erro ao abrir arquivo" << endl;
+        -:  248:    }
+       22:  249:    if (valor == 0) {  //  Problema que nao e solução
+       16:  250:        cout << "0" << endl;
+       16:  251:        return 0;
+        -:  252:    }
+        6:  253:    if (valor == 1) {  //  problema que satisfaz as 8 rainhas
+        6:  254:        cout << "1" << endl;
+        6:  255:        return 1;
+        -:  256:    }
+        -:  257:
+    #####:  258:    return -1;
+        -:  259:}
